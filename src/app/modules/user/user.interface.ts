@@ -13,4 +13,9 @@ interface IUser {
     address: string;
   }
 
+ export interface IUserMethods {
+    fullName(): string;
+  }
+  
+
   export default IUser

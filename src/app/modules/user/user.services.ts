@@ -5,9 +5,10 @@ import "colors";
 export const createUserService = async (payload: IUser): Promise<IUser> => {
   console.log("hit in services".red);
   const user = await new UserModel(payload);
-  //   console.log(user, "save from".blue.bold);
+    console.log(user.fullName(), "save from userController".blue.bold);
   await user.save();
   return user;
+//   user.fullName()
 };
 
 export const getUserService = async (): Promise<IUser[]> => {
@@ -15,7 +16,16 @@ export const getUserService = async (): Promise<IUser[]> => {
   return users;
 };
 
-export const getUserByIdService = async (payload: string):Promise<IUser|null> => {
-  const user = await UserModel.findOne({ id: payload });
+export const getUserByIdService = async (
+  payload: string
+): Promise<IUser | null> => {
+  const user = await UserModel.findOne(
+    { id: payload },
+    {
+      name: 1,
+      birthDate: 1,
+    }
+  );
   return user;
 };
+
