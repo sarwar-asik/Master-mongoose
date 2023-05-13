@@ -10,7 +10,12 @@ export const createUserService = async (payload: IUser): Promise<IUser> => {
   return user;
 };
 
-export const getUserService = async () => {
+export const getUserService = async (): Promise<IUser[]> => {
   const users = await UserModel.find();
   return users;
+};
+
+export const getUserByIdService = async (payload: string):Promise<IUser|null> => {
+  const user = await UserModel.findOne({ id: payload });
+  return user;
 };
