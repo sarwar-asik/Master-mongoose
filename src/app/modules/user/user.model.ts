@@ -1,10 +1,10 @@
 import { Model, Schema, model } from "mongoose";
-import IUser, { IUserMethods } from "./user.interface";
+import IUser, { IUserMethods, StaticUserModel } from "./user.interface";
 
 
 type UserModelType = Model<IUser, {}, IUserMethods>;
 
-const userSchema = new Schema<IUser,UserModelType,IUserMethods>({
+const userSchema = new Schema<IUser,StaticUserModel,IUserMethods>({
   id: {
     type: String,
     required: true,
@@ -49,9 +49,16 @@ const userSchema = new Schema<IUser,UserModelType,IUserMethods>({
     required: true,
   },
 });
-
+// for instance method
 userSchema.method("fullName",function fullName(){
     return this.name.firstName +' '+ this.name.lastName
 })
+// for static method //
+userSchema.static('getStaticAdminUser',async function getStaticAdminUser() {
+  const admin =await this.find({role:"admin"})
+  return admin
+ 
+});
 
-export const UserModel = model<IUser,UserModelType>("User", userSchema);
+
+export const UserModel = model<IUser,StaticUserModel>("User", userSchema);

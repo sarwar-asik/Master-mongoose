@@ -1,5 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { createUserService, getUserByIdService, getUserService } from "./user.services";
+import {
+  createUserService,
+  getStaticAdminService,
+  getUserByIdService,
+  getUserService,
+} from "./user.services";
 
 export const createUserController = async (
   req: Request,
@@ -23,9 +28,14 @@ export const getUserController = async (req: Request, res: Response) => {
 };
 
 export const getUserByIdController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const getUserOne = await getUserByIdService(id);
+  res.status(200).json({ status: "success", data: getUserOne });
+};
 
-    const {id} = req.params
-    const getUserOne = await getUserByIdService(id)
-    res.status(200).json({status:"success",data:getUserOne})
-
+export const getStaticAdminController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  console.log("hitee".red);
+  const getAdminOne = await getStaticAdminService();
+  res.status(200).json({ status: "success", data: getAdminOne });
 };
