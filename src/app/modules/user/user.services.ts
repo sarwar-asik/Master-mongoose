@@ -29,10 +29,8 @@ export const getUserByIdService = async (
   return user;
 };
 
-export const getStaticAdminService =async ():Promise<IUser>=>{
+export const getStaticAdminService = async (): Promise<IUser> => {
+  const admins = await UserModel.getStaticAdminUser();
 
-  const admins = await UserModel.getStaticAdminUser()
-
-  return admins
-
-}
+  return admins;
+};
